@@ -59,6 +59,14 @@ function decodeVIN(VIN) {
     //Check manufacturing country
     var country = WMI[0];
     checkCountry(country);
+    //Get serial/production number
+    var serialArr = [];
+    for (var x = 12; x < 18; x++) {
+        var c = VIN.charAt(x);
+        serialArr.push(c);
+    }
+    var serial = serialArr.join("");
+    output.serial = serial;
     //Return JSON result to the lookup module
     return output;
 }
