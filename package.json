@@ -1,0 +1,25 @@
+{
+  "name": "vin-lookup",
+  "version": "1.0.0",
+  "description": "A NodeJS module to return information on any vehicle based on the VIN",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbialke/vin-lookup.git"
+  },
+  "keywords": [
+    "vin",
+    "lookup",
+    "vehicle",
+    "car"
+  ],
+  "author": "Bradley Bialke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bbialke/vin-lookup/issues"
+  },
+  "homepage": "https://github.com/bbialke/vin-lookup#readme"
+}
