@@ -1,4 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
+const checkWMI = require('./checkWMI');
 
 //Define array for the result of the decoding
 var output = {};
@@ -50,7 +51,7 @@ function checkCountry(country) {
     }
 }
 
-function decodeVIN(VIN) {
+async function decodeVIN(VIN) {
     //Setup database
     var db;
     db = new sqlite3.Database('./node_modules/vin-lookup/VehicleData.sqlite');
@@ -63,23 +64,13 @@ function decodeVIN(VIN) {
     //Check WMI
     var WMI = [VIN.charAt(0), VIN.charAt(1), VIN.charAt(2)];
     var fullWMI = WMI.join('');
-    console.log(fullWMI)
-    //Check the WMI against the database of values
-    console.log('Checking Database...');
-    db.get(`SELECT * FROM WMI WHERE WMI = "${fullWMI}"`, function (_err, row) {
-        if (!row) {
-            console.log('No row found');
-            console.log(_err)
-        }
-        else {
-            console.log(`Recieved ${row}`);
-        }
-    })
-
-    //Old way of handling WMI
     //Check manufacturing country
     var country = WMI[0];
     checkCountry(country);
+    //Check the WMI against the database of values
+    console.log('Checking Database...');
+    output.manufacturer = await checkWMI(fullWMI);
+    console.log(output.manufacturer)
     //Get serial/production number
     var serialArr = [];
     for (var x = 12; x < 18; x++) {
