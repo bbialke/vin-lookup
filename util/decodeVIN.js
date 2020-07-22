@@ -1,3 +1,5 @@
+const sqlite3 = require('sqlite3').verbose();
+
 //Define array for the result of the decoding
 var output = {};
 
@@ -49,6 +51,10 @@ function checkCountry(country) {
 }
 
 function decodeVIN(VIN) {
+    //Setup database
+    var db;
+    db = new sqlite3.Database('./node_modules/vin-lookup/VehicleData.sqlite');
+
     console.log(`Decoding VIN ${VIN}`)
     //Perform checks for validity
     if (VIN.length != 17) {
@@ -56,6 +62,21 @@ function decodeVIN(VIN) {
     }
     //Check WMI
     var WMI = [VIN.charAt(0), VIN.charAt(1), VIN.charAt(2)];
+    var fullWMI = WMI.join('');
+    console.log(fullWMI)
+    //Check the WMI against the database of values
+    console.log('Checking Database...');
+    db.get(`SELECT * FROM WMI WHERE WMI = "${fullWMI}"`, function (_err, row) {
+        if (!row) {
+            console.log('No row found');
+            console.log(_err)
+        }
+        else {
+            console.log(`Recieved ${row}`);
+        }
+    })
+
+    //Old way of handling WMI
     //Check manufacturing country
     var country = WMI[0];
     checkCountry(country);
