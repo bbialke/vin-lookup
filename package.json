@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/bbialke/vin-lookup#readme",
   "dependencies": {
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.3"
   }
 }
